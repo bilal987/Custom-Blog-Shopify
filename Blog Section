@@ -1,0 +1,73 @@
+<div class="st-blog" id="recipes">
+  <div class="container">
+{%- assign blog = blogs[section.settings.blog] -%}
+
+{%- if blog.articles_count > 0 -%}
+  <div class="row st-blog-slides clearfix">
+
+  {%- for article in blog.articles limit: section.settings.post_limit -%}
+    <div class="col-md-4">
+      <div class="st-blog-box">
+        <div class="st-blog-media">
+        <a href="{{ article.url }}">
+            {%- if article.image -%}
+            {{ article | img_url: '500x', scale: 2 | img_tag: '' }}
+            {%- endif -%}
+        </a>
+       {% comment %}
+          {%- if section.settings.blog_show_date -%}
+          <span>
+          {{ article.published_at | time_tag: format: 'month_day_year' }}
+          </span>
+          {%- endif -%}
+    {% endcomment %}
+    </div>
+  <div class="st-blog-title">
+      <a href="{{ article.url }}">
+        <h3>{{ article.title }} <span>Learn More</span></h3>
+          
+      </a>
+  </div>
+
+</div>
+      
+  </div>
+      {%- endfor -%}
+  </div>
+  {%- endif -%}
+      
+    </div>
+</div>
+
+{% schema %}
+{
+  "name": "St Blog",
+  "class": "index-section",
+  "settings": [
+    {
+      "id": "blog",
+      "type": "blog",
+      "label": "Blog"
+    },
+    {
+      "type": "range",
+      "id": "post_limit",
+      "label": "Posts",
+      "min": 3,
+      "max": 12,
+      "step": 3,
+      "default": 3
+    }
+  ],
+  "presets": [
+    {
+      "name": "SSt Blog",
+      "category": "St Blog",
+      "settings": {
+        "blog": "News",
+        "post_limit": 3
+      }
+    }
+  ]
+}
+{% endschema %}
